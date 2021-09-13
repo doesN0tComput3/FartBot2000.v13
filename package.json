@@ -18,6 +18,16 @@
   },
   "devDependencies": {
     "eslint": "^7.32.0",
+    "node": "^16.6.1",
     "nodemon": "^2.0.12"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/doesN0tComput3/FartBot2000.v13.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/doesN0tComput3/FartBot2000.v13/issues"
+  },
+  "homepage": "https://github.com/doesN0tComput3/FartBot2000.v13#readme"
 }

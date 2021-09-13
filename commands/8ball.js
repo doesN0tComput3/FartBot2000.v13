@@ -1,5 +1,6 @@
+const Discord = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const config = require('./config.json');
+const config = require('../config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -12,15 +13,15 @@ module.exports = {
 	async execute(interaction) {
 		const result = Math.floor((Math.random() * config.responses.length));
 
-		const question = args.join(' ');
+		const question = interaction.options.getString('question');
 
 		const embed = new Discord.MessageEmbed()
 			.setTitle('8-Ball')
 			.addField('**Question**', question, true)
 			.addField('**Answer**', config.responses[result])
-			.setThumbnail(message.author.avatarURL())
-			.setTimestamp(message.createdAt)
-			.setFooter('FartBot2000 | !help', message.client.user.avatarURL());
+			.setThumbnail(interaction.user.avatarURL())
+			.setTimestamp(interaction.createdAt)
+			.setFooter('FartBot2000 | !help', interaction.client.user.avatarURL());
 		if (result === 0 || result === 1 || result === 2 || result === 3 || result === 4 || result === 5 || result === 6 || result === 7 || result === 8 || result === 9) {
 			embed.setColor('#39ff14');
 		} else if (result === 10 || result === 11 || result === 12 || result === 13 || result === 14) {
@@ -29,6 +30,6 @@ module.exports = {
 			embed.setColor('#ff0000');
 		}
 
-		await interaction.reply({ embeds: embed });
+		await interaction.reply({ embeds: [embed] });
 	},
 };
