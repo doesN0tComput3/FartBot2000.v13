@@ -5,6 +5,7 @@
 const { Client, Collection, Intents } = require('discord.js');
 const dotenv = require('dotenv');
 const fs = require('fs');
+const keepAlive = require('./server.js');
 
 // Create client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
@@ -41,6 +42,9 @@ client.on('interactionCreate', async interaction => {
 		await interaction.reply({ content: '❌ There was an error trying to execute this command :(', ephemeral: true });
 	}
 });
+
+// Keep bot alive
+keepAlive();
 
 // Login to bot
 client.login(process.env.TOKEN);
