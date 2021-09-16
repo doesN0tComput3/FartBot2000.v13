@@ -21,7 +21,16 @@ module.exports = {
 					.setCustomId('scissors')
 					.setStyle('DANGER'),
 			);
-		await interaction.reply({ content: 'Welcome to **Rock Paper Scissors!**\nPlease **select an option** (times out in 15s)', components: [row] });
+
+		const embed = new Discord.MessageEmbed()
+			.setColor('RANDOM')
+			.setTitle('Welcome to Rock Paper Scissors!')
+			.setDescription('Please **select an option** (times out in 15s)')
+			.setThumbnail(interaction.user.avatarURL())
+			.setTimestamp(interaction.createdAt)
+			.setFooter('FartBot2000 | !help', interaction.client.user.avatarURL());
+
+		await interaction.reply({ embeds: [embed], components: [row] });
 		const possibleAnswers = ['Rock', 'Paper', 'Scissors'];
 		const answer = Math.floor((Math.random() * possibleAnswers.length));
 
