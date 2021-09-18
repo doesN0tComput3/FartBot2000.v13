@@ -23,7 +23,7 @@ module.exports = {
 			.setDescription('You have one new message...')
 			.addField('**Message**', message, true)
 			.setTimestamp(interaction.createdAt)
-			.setFooter('FartBot2000 | /help', interaction.client.user.avatarURL());
+			.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
 
 		person.send({ embeds: [messageEmbed] })
 			.catch(error => {
@@ -37,7 +37,7 @@ module.exports = {
 			.setDescription(`Your message to ${person} has been sent.\n\n**Message:**\n${message}`)
 			.setThumbnail(`${person.avatarURL()}`)
 			.setTimestamp(message.createdAt)
-			.setFooter('FartBot2000 | /help', interaction.client.user.avatarURL());
+			.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
 
 		await interaction.reply({ embeds: [senderEmbed], ephemeral: true });
 	},

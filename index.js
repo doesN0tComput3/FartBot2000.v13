@@ -65,7 +65,7 @@ client.on('messageDelete', message => {
 		.setColor('RED')
 		.setThumbnail(message.author.avatarURL())
 		.addField('Author', message.author.toString(), true)
-		.setFooter('FartBot2000 | /help', message.client.user.avatarURL())
+		.setFooter('FartBot2000 • /help', message.client.user.avatarURL())
 		.setTimestamp(message.createdAt);
 
 	if (message.content) {
@@ -79,6 +79,35 @@ client.on('messageDelete', message => {
 		embed.setImage(image);
 	}
 	const channel = message.client.channels.cache.find(channel => channel.id === '800815475822821436');
+	channel.send({ embeds: [embed] });
+});
+
+// Edited message
+client.on('messageUpdate', (oldMessage, newMessage) => {
+	if (oldMessage.author.bot) return;
+	if (oldMessage.content.includes('https://') || oldMessage.content.includes('http://') || oldMessage.content.includes('www.')) return;
+	if (newMessage.content.includes('https://') || newMessage.content.includes('http://') || newMessage.content.includes('www.')) return;
+	if (!oldMessage.guild) return;
+	if (!oldMessage.content) return;
+
+	const embed = new MessageEmbed()
+		.setTitle('Message Edited')
+		.setColor('YELLOW')
+		.setDescription(`${oldMessage.author} edited their message in ${oldMessage.channel}.\n\n[Link to Message](https://discord.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id})`)
+		.setThumbnail(oldMessage.author.avatarURL())
+		.addField('Old Message', oldMessage.content, true)
+		.addField('New Message', newMessage.content, true)
+		.setTimestamp(newMessage.createdAt)
+		.setFooter('FartBot2000 • /help', oldMessage.client.user.avatarURL());
+
+	const image = newMessage.attachments.first() ? newMessage.attachments.first().proxyURL : null;
+
+	if (image) {
+		embed.setImage(image);
+	}
+
+	const channel = oldMessage.client.channels.cache.find(channel => channel.id === '800865975015833660');
+
 	channel.send({ embeds: [embed] });
 });
 
