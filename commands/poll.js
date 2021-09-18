@@ -19,7 +19,7 @@ module.exports = {
 			.addField('**Poll Started By**', interaction.user.toString())
 			.setThumbnail(interaction.user.avatarURL())
 			.setTimestamp(interaction.createdAt)
-			.setFooter('FartBot2000 | !help', interaction.client.user.avatarURL());
+			.setFooter('FartBot2000 | /help', interaction.client.user.avatarURL());
 
 		const poll = await interaction.reply({ embeds: [pollEmbed], fetchReply: true });
 		poll.react('👍')

@@ -21,7 +21,7 @@ module.exports = {
 			.setDescription(`**${person}** loves **${interaction.user.username}** this much:\n\n**${Math.floor(love)}%\n${loveLevel}**`)
 			.setThumbnail(interaction.user.avatarURL())
 			.setTimestamp(interaction.createdAt)
-			.setFooter('FartBot2000 | !help', interaction.client.user.avatarURL());
+			.setFooter('FartBot2000 | /help', interaction.client.user.avatarURL());
 
 		await interaction.reply({ embeds: [embed] });
 	},

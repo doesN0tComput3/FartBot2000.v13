@@ -46,7 +46,7 @@ client.on('messageDelete', message => {
 		.setColor('RED')
 		.setThumbnail(message.author.avatarURL())
 		.addField('Author', message.author.toString(), true)
-		.setFooter('FartBot2000 | !help', message.client.user.avatarURL())
+		.setFooter('FartBot2000 | /help', message.client.user.avatarURL())
 		.setTimestamp(message.createdAt);
 
 	if (message.content) {

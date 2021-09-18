@@ -25,7 +25,7 @@ module.exports = {
 			.setDescription(`Successfully deleted ${amount} message(s) in ${channel}.`)
 			.setThumbnail(interaction.user.avatarURL())
 			.setTimestamp(interaction.createdAt)
-			.setFooter('FartBot2000 | !help', interaction.client.user.avatarURL());
+			.setFooter('FartBot2000 | /help', interaction.client.user.avatarURL());
 
 		await interaction.reply({ embeds: [embed] });
 	},

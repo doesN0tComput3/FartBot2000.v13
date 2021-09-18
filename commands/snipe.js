@@ -16,7 +16,7 @@ module.exports = {
 			.setAuthor(msg.author, msg.authorAvatar)
 			.setDescription(msg.content)
 			.setTimestamp(msg.timestamp)
-			.setFooter('FartBot2000 | !help', interaction.client.user.avatarURL());
+			.setFooter('FartBot2000 | /help', interaction.client.user.avatarURL());
 
 		if (msg.image) {
 			embed.setImage(msg.image);
