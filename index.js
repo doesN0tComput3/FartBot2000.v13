@@ -6,6 +6,7 @@ const { Client, Collection, Intents, MessageEmbed } = require('discord.js');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const keepAlive = require('./server.js');
+const statuses = require('./statuses.json');
 
 // Create client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
@@ -25,6 +26,24 @@ dotenv.config();
 // Once the client is ready, this will run (once)
 client.once('ready', () => {
 	console.log('Hello.');
+
+	setInterval(function() {
+		const statusType = Math.floor(Math.random() * (6 - 1 + 1) + 1);
+
+		// Playing statuses
+		if (statusType >= 1 && statusType <= 2) {
+			const status = Math.floor(Math.random() * statuses.playingStatus.length);
+			client.user.setActivity(`${statuses.playingStatus[status]} | /help`, { type: 'PLAYING' });
+			// Listening statuses
+		} else if (statusType >= 3 && statusType <= 4) {
+			const status = Math.floor(Math.random() * statuses.listeningStatus.length);
+			client.user.setActivity(`${statuses.listeningStatus[status]} | /help`, { type: 'LISTENING' });
+			// Watching statuses
+		} else if (statusType >= 5 && statusType <= 6) {
+			const status = Math.floor(Math.random() * statuses.watchingStatus.length);
+			client.user.setActivity(`${statuses.watchingStatus[status]} | /help`, { type: 'WATCHING' });
+		}
+	}, 10000);
 });
 
 // Deleted message
