@@ -25,7 +25,7 @@ dotenv.config();
 
 // Once the client is ready, this will run (once)
 client.once('ready', () => {
-	console.log('Hello.');
+	console.log('Good evening.');
 
 	setInterval(function() {
 		const statusType = Math.floor(Math.random() * (6 - 1 + 1) + 1);
@@ -33,15 +33,15 @@ client.once('ready', () => {
 		// Playing statuses
 		if (statusType >= 1 && statusType <= 2) {
 			const status = Math.floor(Math.random() * statuses.playingStatus.length);
-			client.user.setActivity(`${statuses.playingStatus[status]} | /help`, { type: 'PLAYING' });
+			client.user.setActivity(`${statuses.playingStatus[status]} • /help`, { type: 'PLAYING' });
 			// Listening statuses
 		} else if (statusType >= 3 && statusType <= 4) {
 			const status = Math.floor(Math.random() * statuses.listeningStatus.length);
-			client.user.setActivity(`${statuses.listeningStatus[status]} | /help`, { type: 'LISTENING' });
+			client.user.setActivity(`${statuses.listeningStatus[status]} • /help`, { type: 'LISTENING' });
 			// Watching statuses
 		} else if (statusType >= 5 && statusType <= 6) {
 			const status = Math.floor(Math.random() * statuses.watchingStatus.length);
-			client.user.setActivity(`${statuses.watchingStatus[status]} | /help`, { type: 'WATCHING' });
+			client.user.setActivity(`${statuses.watchingStatus[status]} • /help`, { type: 'WATCHING' });
 		}
 	}, 10000);
 });
