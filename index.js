@@ -83,12 +83,24 @@ client.on('messageDelete', message => {
 });
 
 // Edited message
+client.editSnipes = new Map();
 client.on('messageUpdate', (oldMessage, newMessage) => {
 	if (oldMessage.author.bot) return;
 	if (oldMessage.content.includes('https://') || oldMessage.content.includes('http://') || oldMessage.content.includes('www.')) return;
 	if (newMessage.content.includes('https://') || newMessage.content.includes('http://') || newMessage.content.includes('www.')) return;
 	if (!oldMessage.guild) return;
 	if (!oldMessage.content) return;
+
+	// Save message info
+	client.editSnipes.set(oldMessage.channel.id, {
+		oldContent: oldMessage.content,
+		newContent: newMessage.content,
+		author: oldMessage.author.tag,
+		authorAvatar: oldMessage.author.avatarURL(),
+		timestamp: newMessage.createdAt,
+		oldImage: oldMessage.attachments.first() ? oldMessage.attachments.first().proxyURL : null,
+		newImage: newMessage.attachments.first() ? newMessage.attachments.first().proxyURL : null,
+	});
 
 	const embed = new MessageEmbed()
 		.setTitle('Message Edited')
