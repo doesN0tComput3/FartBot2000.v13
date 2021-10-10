@@ -1,7 +1,7 @@
 {
 	"name": "fartbot2000-v13",
-	"version": "1.2.1",
-	"description": "Updating FartBot2000 to discord.js v13",
+	"version": "1.2.2",
+	"description": "Discord.js bot for quan hitters, v13!",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
