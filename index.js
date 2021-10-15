@@ -46,6 +46,11 @@ client.once('ready', () => {
 	}, 10000);
 });
 
+// Handle promise rejections
+process.on('unhandledRejection', error => {
+	console.error('Unhandled promise rejection:', error);
+});
+
 // Deleted message
 client.snipes = new Map();
 client.on('messageDelete', message => {

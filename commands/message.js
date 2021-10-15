@@ -12,7 +12,12 @@ module.exports = {
 		.addStringOption(option =>
 			option.setName('message')
 				.setDescription('Message to send')
-				.setRequired(true)),
+				.setRequired(true))
+		.addStringOption(option =>
+			option.setName('image')
+				.setDescription('Attach image?')
+				.addChoice('yes', 'yes')
+				.addChoice('no', 'no')),
 	async execute(interaction) {
 		const person = interaction.options.getUser('person');
 		const message = interaction.options.getString('message');
@@ -25,12 +30,6 @@ module.exports = {
 			.setTimestamp(interaction.createdAt)
 			.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
 
-		person.send({ embeds: [messageEmbed] })
-			.catch(error => {
-				interaction.reply({ content: `❌ I couldn't send ${person} a message, most likely their dm's are off`, ephemeral: true });
-				return console.log(error);
-			});
-
 		const senderEmbed = new Discord.MessageEmbed()
 			.setColor('#39ff14')
 			.setTitle('Message sent!')
@@ -39,6 +38,59 @@ module.exports = {
 			.setTimestamp(message.createdAt)
 			.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
 
-		await interaction.reply({ embeds: [senderEmbed], ephemeral: true });
+		if (interaction.options.getString('image') === 'yes') {
+			const sendImageEmbed = new Discord.MessageEmbed()
+				.setColor('BLUE')
+				.setTitle(`Send an Image to ${person}`)
+				.setDescription('Please check your DM\'s for instructions on how to send your image.')
+				.setThumbnail(`${person.avatarURL()}`)
+				.setTimestamp(interaction.createdAt)
+				.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
+
+			interaction.reply({ embeds: [sendImageEmbed], ephemeral: true });
+
+			const dmEmbed = new Discord.MessageEmbed()
+				.setColor('BLUE')
+				.setTitle('Send your photo')
+				.setDescription('Send your photo here.\n\nMax time: 30s')
+				.setThumbnail(`${person.avatarURL()}`)
+				.setTimestamp(interaction.createdAt)
+				.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
+
+			interaction.user.send({ embeds: [dmEmbed] }).then(() => {
+				const filter = m => m.author.id === interaction.user.id;
+
+				interaction.user.dmChannel.awaitMessages({ filter, time: 30000, max: 1, errors: ['time'] })
+					.then(messages => {
+						if (!messages) return interaction.user.send('❌ Too late, please try again.');
+						const msg = messages.first();
+
+						if (!msg.attachments) return interaction.user.send('❌ Attach something next time.');
+						if (!msg.attachments.first().contentType.startsWith('image')
+						|| msg.attachments.first().contentType.startsWith('video')) return interaction.user.send('❌ Attach a photo next time.');
+
+						const image = msg.attachments.first() ? msg.attachments.first().proxyURL : null;
+						messageEmbed.setImage(image);
+						senderEmbed.setImage(image);
+
+						person.send({ embeds: [messageEmbed] })
+							.catch(error => {
+								interaction.user.send({ content: `❌ I couldn't send ${person} a message, most likely their dm's are off`, ephemeral: true });
+								return console.log(error);
+							});
+						interaction.user.send({ embeds: [senderEmbed], ephemeral: true });
+					}).catch(() => {
+						interaction.user.send('❌ Too late, try again.');
+					});
+			});
+		} else {
+			person.send({ embeds: [messageEmbed] })
+				.catch(error => {
+					interaction.reply({ content: `❌ I couldn't send ${person} a message, most likely their dm's are off`, ephemeral: true });
+					return console.log(error);
+				});
+
+			await interaction.reply({ embeds: [senderEmbed], ephemeral: true });
+		}
 	},
 };
