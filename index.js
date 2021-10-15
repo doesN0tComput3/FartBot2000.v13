@@ -9,7 +9,7 @@ const keepAlive = require('./server.js');
 const statuses = require('./statuses.json');
 
 // Create client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] });
 
 // Reading command files
 client.commands = new Collection();
