@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const FartBot2000 = require('../package.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -28,7 +29,7 @@ module.exports = {
 			.setDescription('You have one new message...')
 			.addField('**Message**', message, true)
 			.setTimestamp(interaction.createdAt)
-			.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
+			.setFooter(`FartBot2000 • v${FartBot2000.version}`, interaction.client.user.avatarURL());
 
 		const senderEmbed = new Discord.MessageEmbed()
 			.setColor('#39ff14')
@@ -36,7 +37,7 @@ module.exports = {
 			.setDescription(`Your message to ${person} has been sent.\n\n**Message:**\n${message}`)
 			.setThumbnail(`${person.avatarURL()}`)
 			.setTimestamp(message.createdAt)
-			.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
+			.setFooter(`FartBot2000 • v${FartBot2000.version}`, interaction.client.user.avatarURL());
 
 		if (interaction.options.getString('image') === 'yes') {
 			const sendImageEmbed = new Discord.MessageEmbed()
@@ -45,7 +46,7 @@ module.exports = {
 				.setDescription('Please check your DM\'s for instructions on how to send your image.')
 				.setThumbnail(`${person.avatarURL()}`)
 				.setTimestamp(interaction.createdAt)
-				.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
+				.setFooter(`FartBot2000 • v${FartBot2000.version}`, interaction.client.user.avatarURL());
 
 			interaction.reply({ embeds: [sendImageEmbed], ephemeral: true });
 
@@ -55,7 +56,7 @@ module.exports = {
 				.setDescription('Send your photo here.\n\nMax time: 30s')
 				.setThumbnail(`${person.avatarURL()}`)
 				.setTimestamp(interaction.createdAt)
-				.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
+				.setFooter(`FartBot2000 • v${FartBot2000.version}`, interaction.client.user.avatarURL());
 
 			interaction.user.send({ embeds: [dmEmbed] }).then(() => {
 				const filter = m => m.author.id === interaction.user.id;

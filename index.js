@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const keepAlive = require('./server.js');
 const statuses = require('./statuses.json');
+const FartBot2000 = require('./package.json');
 
 // Create client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] });
@@ -33,15 +34,15 @@ client.once('ready', () => {
 		// Playing statuses
 		if (statusType >= 1 && statusType <= 2) {
 			const status = Math.floor(Math.random() * statuses.playingStatus.length);
-			client.user.setActivity(`${statuses.playingStatus[status]} • /help`, { type: 'PLAYING' });
+			client.user.setActivity(`${statuses.playingStatus[status]} • v${FartBot2000.version}`, { type: 'PLAYING' });
 			// Listening statuses
 		} else if (statusType >= 3 && statusType <= 4) {
 			const status = Math.floor(Math.random() * statuses.listeningStatus.length);
-			client.user.setActivity(`${statuses.listeningStatus[status]} • /help`, { type: 'LISTENING' });
+			client.user.setActivity(`${statuses.listeningStatus[status]} • v${FartBot2000.version}`, { type: 'LISTENING' });
 			// Watching statuses
 		} else if (statusType >= 5 && statusType <= 6) {
 			const status = Math.floor(Math.random() * statuses.watchingStatus.length);
-			client.user.setActivity(`${statuses.watchingStatus[status]} • /help`, { type: 'WATCHING' });
+			client.user.setActivity(`${statuses.watchingStatus[status]} • v${FartBot2000.version}`, { type: 'WATCHING' });
 		}
 	}, 10000);
 });
@@ -70,7 +71,7 @@ client.on('messageDelete', message => {
 		.setColor('RED')
 		.setThumbnail(message.author.avatarURL())
 		.addField('Author', message.author.toString(), true)
-		.setFooter('FartBot2000 • /help', message.client.user.avatarURL())
+		.setFooter(`FartBot2000 • v${FartBot2000.version}`, message.client.user.avatarURL())
 		.setTimestamp(message.createdAt);
 
 	if (message.content) {
@@ -115,7 +116,7 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
 		.addField('Old Message', oldMessage.content, true)
 		.addField('New Message', newMessage.content, true)
 		.setTimestamp(newMessage.createdAt)
-		.setFooter('FartBot2000 • /help', oldMessage.client.user.avatarURL());
+		.setFooter(`FartBot2000 • v${FartBot2000.version}`, oldMessage.client.user.avatarURL());
 
 	const image = newMessage.attachments.first() ? newMessage.attachments.first().proxyURL : null;
 

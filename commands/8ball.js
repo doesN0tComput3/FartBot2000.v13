@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const config = require('../config.json');
+const FartBot2000 = require('../package.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -21,7 +22,7 @@ module.exports = {
 			.addField('**Answer**', config.responses[result])
 			.setThumbnail(interaction.user.avatarURL())
 			.setTimestamp(interaction.createdAt)
-			.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
+			.setFooter(`FartBot2000 • v${FartBot2000.version}`, interaction.client.user.avatarURL());
 		if (result === 0 || result === 1 || result === 2 || result === 3 || result === 4 || result === 5 || result === 6 || result === 7 || result === 8 || result === 9) {
 			embed.setColor('#39ff14');
 		} else if (result === 10 || result === 11 || result === 12 || result === 13 || result === 14) {

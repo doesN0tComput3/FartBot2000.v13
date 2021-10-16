@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const FartBot2000 = require('../package.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -23,7 +24,7 @@ module.exports = {
 				.setAuthor(msg.author, msg.authorAvatar)
 				.setDescription(msg.content)
 				.setTimestamp(msg.timestamp)
-				.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
+				.setFooter(`FartBot2000 • v${FartBot2000.version}`, interaction.client.user.avatarURL());
 
 			if (msg.image) {
 				embed.setImage(msg.image);
@@ -42,7 +43,7 @@ module.exports = {
 				.addField('**Old Message**', msg.oldContent, true)
 				.addField('**New Message**', msg.newContent, true)
 				.setTimestamp(msg.timestamp)
-				.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
+				.setFooter(`FartBot2000 • v${FartBot2000.version}`, interaction.client.user.avatarURL());
 
 			if (msg.newImage) {
 				embed.setImage(msg.newImage);

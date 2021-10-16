@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const FartBot2000 = require('../package.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -24,7 +25,7 @@ module.exports = {
 				.setDescription('Please check your DM\'s for instructions on how to send your image.')
 				.setThumbnail(`${interaction.user.avatarURL()}`)
 				.setTimestamp(interaction.createdAt)
-				.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
+				.setFooter(`FartBot2000 • v${FartBot2000.version}`, interaction.client.user.avatarURL());
 
 			interaction.reply({ embeds: [sendImageEmbed], ephemeral: true });
 
@@ -34,7 +35,7 @@ module.exports = {
 				.setDescription('Send your photo here.\n\nMax time: 30s')
 				.setThumbnail(`${interaction.user.avatarURL()}`)
 				.setTimestamp(interaction.createdAt)
-				.setFooter('FartBot2000 • /help', interaction.client.user.avatarURL());
+				.setFooter(`FartBot2000 • v${FartBot2000.version}`, interaction.client.user.avatarURL());
 
 			interaction.user.send({ embeds: [dmEmbed] }).then(() => {
 				const filter = m => m.author.id === interaction.user.id;
