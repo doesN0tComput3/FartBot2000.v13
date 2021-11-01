@@ -21,6 +21,18 @@ for (const file of commandFiles) {
 	client.commands.set(command.data.name, command);
 }
 
+// Reading event files
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+	const event = require(`./events/${file}`);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
+
 // Configure dotenv
 dotenv.config();
 
@@ -128,7 +140,7 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
 
 	channel.send({ embeds: [embed] });
 });
-
+/*
 // When an interaction is created, this will run
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
@@ -144,7 +156,7 @@ client.on('interactionCreate', async interaction => {
 		await interaction.reply({ content: '❌ There was an error trying to execute this command :(', ephemeral: true });
 	}
 });
-
+*/
 // Keep bot alive
 keepAlive();
 
