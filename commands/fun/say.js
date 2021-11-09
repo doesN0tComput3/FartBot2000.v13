@@ -1,14 +1,14 @@
 const Discord = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const FartBot2000 = require('../package.json');
+const FartBot2000 = require('../../package.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('poll')
-		.setDescription('Runs a poll in the channel')
+		.setName('say')
+		.setDescription('Repeats what you say')
 		.addStringOption(option =>
-			option.setName('question')
-				.setDescription('Question to ask')
+			option.setName('text')
+				.setDescription('Text to say')
 				.setRequired(true))
 		.addStringOption(option =>
 			option.setName('image')
@@ -16,16 +16,7 @@ module.exports = {
 				.addChoice('yes', 'yes')
 				.addChoice('no', 'no')),
 	async execute(interaction) {
-		const question = interaction.options.getString('question');
-
-		const pollEmbed = new Discord.MessageEmbed()
-			.setColor('RANDOM')
-			.setTitle('Poll')
-			.addField('**Question**', question, true)
-			.addField('**Poll Started By**', interaction.user.toString())
-			.setThumbnail(interaction.user.avatarURL())
-			.setTimestamp(interaction.createdAt)
-			.setFooter(`FartBot2000 • v${FartBot2000.version}`, interaction.client.user.avatarURL());
+		const text = interaction.options.getString('text');
 
 		if (interaction.options.getString('image') === 'yes') {
 			const sendImageEmbed = new Discord.MessageEmbed()
@@ -59,23 +50,16 @@ module.exports = {
 							|| msg.attachments.first().contentType.startsWith('video')) return interaction.user.send('❌ Attach a photo next time.');
 
 						const image = msg.attachments.first() ? msg.attachments.first().proxyURL : null;
-						pollEmbed.setImage(image);
-
-						const poll = await interaction.channel.send({ embeds: [pollEmbed], fetchReply: true });
-						poll.react('👍')
-							.then(() => poll.react('👎'))
-							.catch(error => console.error('One of the emojis failed to react:', error));
+						await interaction.channel.send({ content: text.toString(), files: [image] });
 
 						await interaction.user.send('✅ Done!');
-					}).catch(() => {
-						interaction.user.send('❌ Too late, try again.');
+					}).catch(error => {
+						interaction.user.send(`Ok.\n\n${error}`);
 					});
 			});
 		} else {
-			const poll = await interaction.reply({ embeds: [pollEmbed], fetchReply: true });
-			poll.react('👍')
-				.then(() => poll.react('👎'))
-				.catch(error => console.error('One of the emojis failed to react:', error));
+			await interaction.channel.send(text);
+			await interaction.reply({ content: '✅ Done!', ephemeral: true });
 		}
 	},
 };

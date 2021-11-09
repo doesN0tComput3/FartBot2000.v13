@@ -12,16 +12,19 @@ const FartBot2000 = require('./package.json');
 // Create client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 
-// Reading command files
+/* Reading command files
 client.commands = new Collection();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandFolders = fs.readdirSync('./commands');
+for (const folder of commandFolders) {
+	const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+	for (const file of commandFiles) {
+		const command = require(`./commands/${folder}/${file}`);
+		client.properties.commandArray.push(command.data.toJSON());
+		client.properties.commands.set(command.data.name, command);
+	}
+} */
 
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.data.name, command);
-}
-
-// Reading event files
+/* Reading event files
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
@@ -30,6 +33,17 @@ for (const file of eventFiles) {
 		client.once(event.name, (...args) => event.execute(...args));
 	} else {
 		client.on(event.name, (...args) => event.execute(...args));
+	}
+} */
+
+// Read function files
+const functionFolders = fs.readdirSync('./functions');
+for (const folder of functionFolders) {
+	const functionFiles = fs.readdirSync(`./functions/${folder}`).filter(file => file.endsWith('.js'));
+
+	for (const file of functionFiles) {
+		require(`./functions/${folder}/${file}`)(client);
+		console.log(`${file} registered.`);
 	}
 }
 
@@ -61,7 +75,7 @@ client.once('ready', () => {
 
 // Handle promise rejections
 process.on('unhandledRejection', error => {
-	console.error('Unhandled promise rejection:', error);
+	console.error('Unhandled promise rejection:\n\n', error);
 });
 
 // Deleted message
@@ -140,25 +154,9 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
 
 	channel.send({ embeds: [embed] });
 });
-/*
-// When an interaction is created, this will run
-client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
 
-	const command = client.commands.get(interaction.commandName);
-
-	if (!command) return;
-
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		await interaction.reply({ content: '❌ There was an error trying to execute this command :(', ephemeral: true });
-	}
-});
-*/
 // Keep bot alive
 keepAlive();
 
 // Login to bot
-client.login(process.env.TOKEN);
+client.start();

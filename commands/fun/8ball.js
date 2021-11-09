@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const config = require('../config.json');
-const FartBot2000 = require('../package.json');
+const config = require('../../config.json');
+const FartBot2000 = require('../../package.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()

@@ -1,14 +1,14 @@
 const Discord = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const FartBot2000 = require('../package.json');
+const FartBot2000 = require('../../package.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('ilove')
-		.setDescription('How much do YOU love *that* person?')
+		.setName('love')
+		.setDescription('How much does this person love YOU?')
 		.addUserOption(option =>
 			option.setName('person')
-				.setDescription('Person you love')
+				.setDescription('Person that loves you')
 				.setRequired(true)),
 	async execute(interaction) {
 		const person = interaction.options.getUser('person');
@@ -18,8 +18,8 @@ module.exports = {
 
 		const embed = new Discord.MessageEmbed()
 			.setColor('RANDOM')
-			.setTitle(`**How much does ${interaction.user.username} love ${person.username}?**`)
-			.setDescription(`**${interaction.user.username}** loves **${person}** this much:\n\n**${Math.floor(love)}%\n${loveLevel}**`)
+			.setTitle(`**How much does ${person.username} love ${interaction.user.username}?**`)
+			.setDescription(`**${person}** loves **${interaction.user.username}** this much:\n\n**${Math.floor(love)}%\n${loveLevel}**`)
 			.setThumbnail(interaction.user.avatarURL())
 			.setTimestamp(interaction.createdAt)
 			.setFooter(`FartBot2000 • v${FartBot2000.version}`, interaction.client.user.avatarURL());

@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
-const FartBot2000 = require('../package.json');
-const { channelMention } = require('@discordjs/builders');
+const FartBot2000 = require('../../package.json');
 
 module.exports = {
 	name: 'interactionCreate',
