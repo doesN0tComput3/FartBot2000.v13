@@ -6,7 +6,7 @@ module.exports = {
 	async execute(interaction) {
 		if (!interaction.isCommand()) return;
 
-		const command = interaction.client.commands.get(interaction.commandName);
+		const command = interaction.client.properties.commands.get(interaction.commandName);
 
 		if (!command) return;
 
@@ -31,7 +31,7 @@ module.exports = {
 				if (reply.content.length > 25) {
 					embed.addField('Reply', 'Reply is too large to send here.', true);
 				} else {
-					embed.addField('Reply', reply.content, true);
+					embed.addField('Reply', `${reply.content}`, true);
 				}
 			}
 
