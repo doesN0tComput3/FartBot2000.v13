@@ -1,4 +1,5 @@
 const express = require('express');
+const chalk = require('chalk');
 const server = express();
 
 server.all('/', (req, res) => {
@@ -6,7 +7,7 @@ server.all('/', (req, res) => {
 });
 
 function keepAlive() {
-	server.listen(3000, () => { console.log('Server is Ready!'); });
+	server.listen(3000, () => { console.log(chalk.blue('[FartBot2000]: ') + chalk.cyan('Server is ready!')); });
 }
 
 module.exports = keepAlive;

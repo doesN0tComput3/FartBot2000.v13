@@ -1,4 +1,5 @@
 const fs = require('fs');
+const chalk = require('chalk');
 
 module.exports = (client) => {
 	client.eventHandler = async () => {
@@ -15,7 +16,7 @@ module.exports = (client) => {
 					} else {
 						client.on(event.name, (...args) => event.execute(...args));
 					}
-					console.log(`${file}'s content registered as the ${event.name} Discord.js event.`);
+					console.log(chalk.green('[Event Handler]: ') + chalk.yellow(`${file}'s content registered as the ${event.name} Discord.js event.`));
 				}
 			}
 			/* else if (folder == 'mongoose') {

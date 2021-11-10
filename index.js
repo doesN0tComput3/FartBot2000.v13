@@ -2,8 +2,9 @@
 // Updating FartBot2000 to discord.js
 // ----------------------------------
 // Require necessary packages
-const { Client, Collection, Intents, MessageEmbed } = require('discord.js');
+const { Client, Intents, MessageEmbed } = require('discord.js');
 const dotenv = require('dotenv');
+const chalk = require('chalk');
 const fs = require('fs');
 const keepAlive = require('./server.js');
 const statuses = require('./statuses.json');
@@ -12,30 +13,6 @@ const FartBot2000 = require('./package.json');
 // Create client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 
-/* Reading command files
-client.commands = new Collection();
-const commandFolders = fs.readdirSync('./commands');
-for (const folder of commandFolders) {
-	const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-	for (const file of commandFiles) {
-		const command = require(`./commands/${folder}/${file}`);
-		client.properties.commandArray.push(command.data.toJSON());
-		client.properties.commands.set(command.data.name, command);
-	}
-} */
-
-/* Reading event files
-const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
-
-for (const file of eventFiles) {
-	const event = require(`./events/${file}`);
-	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args));
-	} else {
-		client.on(event.name, (...args) => event.execute(...args));
-	}
-} */
-
 // Read function files
 const functionFolders = fs.readdirSync('./functions');
 for (const folder of functionFolders) {
@@ -43,7 +20,7 @@ for (const folder of functionFolders) {
 
 	for (const file of functionFiles) {
 		require(`./functions/${folder}/${file}`)(client);
-		console.log(`${file} registered.`);
+		console.log(chalk.green('[Functions Handler]: ') + chalk.yellow(`${file} registered.`));
 	}
 }
 
@@ -52,7 +29,7 @@ dotenv.config();
 
 // Once the client is ready, this will run (once)
 client.once('ready', () => {
-	console.log('Good evening.');
+	console.log(chalk.blue('[FartBot2000]: ') + chalk.cyan('Good evening.'));
 
 	setInterval(function() {
 		const statusType = Math.floor(Math.random() * (6 - 1 + 1) + 1);
